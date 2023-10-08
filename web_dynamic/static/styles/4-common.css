@@ -12,3 +12,16 @@ body .container {
 .amenity-checkbox {
 	margin: 10px;
 }
+
+.state-list-item {
+	display: flex;
+	align-item: right;
+}
+
+.state-checkbox {
+	margin-right: 10px;
+}
+
+.city-checkbox {
+	margin-right: 10px;
+}
