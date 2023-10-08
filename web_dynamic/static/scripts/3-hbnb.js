@@ -28,34 +28,34 @@ $(document).ready(function () {
     url: 'http://0.0.0.0:5001/api/v1/status/',
     method: 'GET',
     dataType: 'json',
-    success: function(data) {
+    success: function (data) {
       if (data.status === 'OK') {
         $('div#api_status').addClass('available');
       } else {
         $('div#api_status').removeClass('available');
       }
     },
-    error: function(hxr, status, error) {
+    error: function (hxr, status, error) {
       $('div#api_status').removeClass('available');
     }
   });
 
-  function populatePlaces(data) {
-    console.log("populating places")
-    var placesList = $('section.places');
+  function populatePlaces (data) {
+    console.log('populating places');
+    const placesList = $('section.places');
     data.forEach(function (place) {
-      var articleTag = $('<article>');
+      const articleTag = $('<article>');
 
-      var titleBox = $('<div class="title_box">');
+      const titleBox = $('<div class="title_box">');
       titleBox.append($('<h2>').text(place.name));
       titleBox.append($('<div class="price_by_night">').text('$' + place.price_by_night));
 
-      var information = $('<div class="information">');
+      const information = $('<div class="information">');
       information.append($('<div class="max_guest">').text(place.max_guest + ' Guest' + (place.max_guest != 1 ? 's' : '')));
       information.append($('<div class="number_rooms">').text(place.number_rooms + ' Bedroom' + (place.number_rooms != 1 ? 's' : '')));
       information.append($('<div class="number_bathrooms">').text(place.number_bathrooms + ' Bathroom' + (place.number_bathrooms != 1 ? 's' : '')));
 
-      var description = $('<div class="description">').text(place.description);
+      const description = $('<div class="description">').text(place.description);
 
       articleTag.append(titleBox, information, description);
       placesList.append(articleTag);
@@ -68,6 +68,6 @@ $(document).ready(function () {
     data: JSON.stringify({}),
     contentType: 'application/json',
     dataType: 'json',
-    success: populatePlaces,
+    success: populatePlaces
   });
 });

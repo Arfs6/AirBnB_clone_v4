@@ -1,5 +1,7 @@
 $(document).ready(function () {
   const amenities = {};
+  const states = {};
+  const cities = {};
 
   $('.amenity-checkbox').change(function () {
     const amenityName = $(this).parent().data('name');
@@ -11,8 +13,6 @@ $(document).ready(function () {
     }
 
     let amenitiesH4 = '';
-
-    console.log(`Amenities checked: ${amenities}`);
     for (const key in amenities) {
       if (!amenities.hasOwnProperty(key)) continue;
       if (amenitiesH4 === '') {
@@ -22,6 +22,32 @@ $(document).ready(function () {
       }
     }
     $('.amenities h4').text(amenitiesH4);
+  });
+
+  $('.state-checkbox').change(function () {
+    const stateId = $(this).data('id');
+    const stateName = $(this).data('name');
+    console.log(`state name = ${stateName}\nstate id = ${stateId}`);
+    if ($(this).is(':checked')) {
+      states[stateId] = stateName;
+    } else {
+      delete states[stateId];
+    }
+
+    citiesAndStates = [...Object.values(states), ...Object.values(cities)];
+    $('#selected-states').text(citiesAndStates.join(', '));
+  });
+
+  $('.city-checkbox').change(function () {
+    const cityId = $(this).data('id');
+    const cityName = $(this).data('name');
+    if ($(this).is(':checked')) {
+      cities[cityId] = cityName;
+    } else {
+      delete cities[cityId];
+    }
+    citiesAndStates = [...Object.values(states), ...Object.values(cities)];
+    $('#selected-states').text(citiesAndStates.join(', '));
   });
 
   $.ajax({
@@ -76,7 +102,11 @@ $(document).ready(function () {
       url: 'http://localhost:5001/api/v1/places_search',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({ amenities: Object.keys(amenities) }),
+      data: JSON.stringify({
+        amenities: Object.keys(amenities),
+        states: Objects.keys(states),
+        cities: Object.keys(cities)
+      }),
       dataType: 'json'
     });
   });

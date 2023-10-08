@@ -28,14 +28,14 @@ $(document).ready(function () {
     url: 'http://0.0.0.0:5001/api/v1/status/',
     method: 'GET',
     dataType: 'json',
-    success: function(data) {
+    success: function (data) {
       if (data.status === 'OK') {
         $('div#api_status').addClass('available');
       } else {
         $('div#api_status').removeClass('available');
       }
     },
-    error: function(hxr, status, error) {
+    error: function (hxr, status, error) {
       $('div#api_status').removeClass('available');
     }
   });
